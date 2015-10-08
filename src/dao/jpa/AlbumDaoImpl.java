@@ -42,5 +42,25 @@ public class AlbumDaoImpl implements AlbumDao {
 		Query query = em.createQuery(jpql);
 		return query.getResultList();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Album> buscarPorAnoNome(Integer ano, String trechoNome) {
+		
+		String s = "SELECT a FROM Album a WHERE 1=1";
+		
+		if (ano != null)
+			s = s + " AND a.ano = :p1";
+		if (trechoNome != null)
+			s = s + " AND a.nome LIKE :p2";
+
+		Query query = em.createQuery(s);
+
+		if (ano != null)
+			query.setParameter("p1", ano);
+		if (trechoNome != null)
+			query.setParameter("p2", "%"+trechoNome+"%");
+		
+		return query.getResultList();
+	}
 
 }

@@ -1,25 +1,19 @@
 Favor executar a partir do programa "Principal"
 
-Neste push foi acrescentada a camada de serviço.
+Neste push foi acrescentada a implementacao dos seguintes
+casos de uso:
 
-Críticas: 
-
-  1) O EntityManagerFactory não fecha ao sair do menu, 
-  forçando o desenvolvedor a fechar a aplicação manualmente
-  mesmo após escolher a opção "sair" do menu.
-
-  2) Conforme mencionado no LEIAME.txt do push anterior,
-  por razões de simplicidade a interface Conexao.java foi
-  retirada do projeto. A consequencia negativa disso, 
-  entretanto, foi ter aparecido um acoplamento entre a 
-  camada de serviço e a camada de acesso a dados (pois a 
-  camada de serviço conhece a implementaçao de conexao 
-  da camada de acesso a dados, ou seja, o EntityManager).
+  - UC02 : Pesquisa Albuns
 
 ----------------------------------------------------------
 
-O programa "Instanciacao" foi mantido, cujo propósito é apenas
+Nota: a partir deste push as opcoes do menu do programa
+Principal correspondem aos casos de uso do sistema.
+
+----------------------------------------------------------
+
+O programa "Instanciacao" foi mantido, cujo proposito eh apenas
 criar e instanciar a base de dados (nome da base: "artistas")
 
-O programa "TesteMetodos" foi mantido, cujo propósito é apenas
-testar os métodos das classes de domínio
+O programa "TesteMetodos" foi mantido, cujo proposito eh apenas
+testar os metodos das classes de dominio

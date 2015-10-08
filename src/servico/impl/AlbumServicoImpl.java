@@ -53,4 +53,8 @@ public class AlbumServicoImpl implements AlbumServico {
 		return dao.buscarTodos();
 	}
 
+	public List<Album> buscarPorAnoNome(Integer ano, String trechoNome) {
+		return dao.buscarPorAnoNome(ano, trechoNome);
+	}
+
 }
