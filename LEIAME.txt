@@ -1,0 +1,13 @@
+Favor executar a partir do programa "Principal"
+
+Neste push foi acrescentada uma pequena aplicação console de testes, 
+apenas para mostrar a implementação de um pequeno menu de opções, 
+bem como do acesso a dados diretamente a partir da aplicação.
+
+----------------------------------------------------------
+
+O programa "Instanciacao" foi mantido, cujo propósito é apenas
+criar e instanciar a base de dados (nome da base: "artistas")
+
+O programa "TesteMetodos" foi mantido, cujo propósito é apenas
+testar os métodos das classes de domínio
