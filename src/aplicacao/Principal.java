@@ -3,11 +3,10 @@ package aplicacao;
 import java.util.List;
 import java.util.Scanner;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
-
+import dao.AlbumDao;
+import dao.ArtistaDao;
+import dao.Conexao;
+import dao.DaoFactory;
 import dominio.Album;
 import dominio.Artista;
 
@@ -17,52 +16,50 @@ public class Principal {
 
 		Scanner sc = new Scanner(System.in);
 		int op;
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("meujpa");
-		EntityManager em = null;
 		int cod;
+		Conexao conn = null;
 		Album alb = null;
 		Artista art = null;
+		AlbumDao albumDao = null;
+		ArtistaDao artistaDao = null;
 
 		do {
 			op = Tela.menu(sc);
 
 			switch (op) {
 			case 1:
-				em = emf.createEntityManager();
+				conn = DaoFactory.criarConexao();
 				System.out.println("Digite o código de um álbum: ");
 				cod = Integer.parseInt(sc.nextLine());
-				alb = em.find(Album.class, cod);
+				albumDao = DaoFactory.criarAlbumDao(conn);
+				alb = albumDao.buscar(cod);
 				if (alb == null) {
 					System.out.println("Código inexistente!");
 				} else {
 					System.out.println("Duração do álbum " + alb.getNome() + ": " + alb.duracao());
 				}
-				em.close();
+				conn.fecharConexao();
 				break;
 
 			case 2:
-				em = emf.createEntityManager();
+				conn = DaoFactory.criarConexao();
 				
-				String s1 = "SELECT a FROM Album a";
-				Query q1 = em.createQuery(s1);
-				@SuppressWarnings("unchecked")
-				List<Album> listAlbuns = q1.getResultList();
+				albumDao = DaoFactory.criarAlbumDao(conn);
+				List<Album> listAlbuns = albumDao.buscarTodos();
 
 				System.out.println("Listagem de álbuns:");
 				for (Album x : listAlbuns) {
 					System.out.println(x.getNome()+", "+x.getAno()+" - "+x.getArtista().getNome());
 				}
 				
-				em.close();
+				conn.fecharConexao();
 				break;
 
 			case 3:
-				em = emf.createEntityManager();
+				conn = DaoFactory.criarConexao();
 
-				String s2 = "SELECT a FROM Artista a";
-				Query q2 = em.createQuery(s2);
-				@SuppressWarnings("unchecked")
-				List<Artista> listArtistas = q2.getResultList();
+				artistaDao = DaoFactory.criarArtistaDao(conn);
+				List<Artista> listArtistas = artistaDao.buscarTodos();
 				System.out.println("Artistas existentes: ");
 				for (Artista x : listArtistas) {
 					System.out.println(x);
@@ -70,7 +67,7 @@ public class Principal {
 				
 				System.out.println("Digite o código do artista do novo álbum a ser inserido: ");
 				int codArtista = Integer.parseInt(sc.nextLine());
-				art = em.find(Artista.class, codArtista);
+				art = artistaDao.buscar(codArtista);
 
 				if (art == null) {
 					System.out.println("Código de artista inexistente!");
@@ -81,20 +78,21 @@ public class Principal {
 					System.out.println("Digite o ano do novo álbum: ");
 					int ano = Integer.parseInt(sc.nextLine());
 					alb = new Album(null, nome, ano, art);
-					em.getTransaction().begin();
+					conn.iniciarTransacao();
+					albumDao = DaoFactory.criarAlbumDao(conn);
 					try {
-						em.persist(alb);
-						em.getTransaction().commit();
+						albumDao.inserirAtualizar(alb);
+						conn.commit();
 						System.out.println("Álbum inserido! Código: " + alb.getCodAlbum());
 					}
 					catch (Exception e) {
-						if (em.getTransaction().isActive()) {
-							em.getTransaction().rollback();
+						if (conn.transacaoAtiva()) {
+							conn.rollback();
 						}
 						System.out.println("Falha ao inserir álbum!");
 					}
 				}
-				em.close();
+				conn.fecharConexao();
 				break;
 
 			case 4:
@@ -107,7 +105,6 @@ public class Principal {
 
 		} while (op != 4);
 
-		emf.close();
 		sc.close();
 	}
 }

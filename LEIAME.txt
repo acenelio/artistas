@@ -1,8 +1,18 @@
 Favor executar a partir do programa "Principal"
 
-Neste push foi acrescentada uma pequena aplicação console de testes, 
-apenas para mostrar a implementação de um pequeno menu de opções, 
-bem como do acesso a dados diretamente a partir da aplicação.
+Neste push foi acrescentada a camada de acesso a dados.
+
+Críticas: 
+
+  1) O EntityManagerFactory não fecha ao sair do menu, 
+  forçando o desenvolvedor a fechar a aplicação manualmente
+  mesmo após escolher a opção "sair" do menu.
+
+  2) Foi feita uma interface Conexao.java com o intuito de 
+  encapsular os objetos de conexao específicos do JPA, 
+  desacoplando assim completamente a aplicacao da camada 
+  de acesso a dados. Essa interface será, entretanto, 
+  retirada no próximo push por razões de simplicidade.
 
 ----------------------------------------------------------
 
