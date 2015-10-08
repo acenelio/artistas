@@ -6,16 +6,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import dao.MusicaDao;
-import dao.Conexao;
 import dominio.Musica;
 
 public class MusicaDaoImpl implements MusicaDao {
 
 	private EntityManager em;
 	
-	public MusicaDaoImpl(Conexao conn) {
-		ConexaoImpl aux = (ConexaoImpl) conn;
-		this.em = aux.getEm();
+	public MusicaDaoImpl() {
+		this.em = EM.getLocalEm();
 	}
 	
 	@Override

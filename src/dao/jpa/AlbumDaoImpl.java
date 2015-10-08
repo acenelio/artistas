@@ -6,16 +6,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import dao.AlbumDao;
-import dao.Conexao;
 import dominio.Album;
 
 public class AlbumDaoImpl implements AlbumDao {
 
 	private EntityManager em;
 	
-	public AlbumDaoImpl(Conexao conn) {
-		ConexaoImpl aux = (ConexaoImpl) conn;
-		this.em = aux.getEm();
+	public AlbumDaoImpl() {
+		this.em = EM.getLocalEm();
 	}
 	
 	@Override

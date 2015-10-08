@@ -6,16 +6,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import dao.ArtistaDao;
-import dao.Conexao;
 import dominio.Artista;
 
 public class ArtistaDaoImpl implements ArtistaDao {
 
 	private EntityManager em;
 	
-	public ArtistaDaoImpl(Conexao conn) {
-		ConexaoImpl aux = (ConexaoImpl) conn;
-		this.em = aux.getEm();
+	public ArtistaDaoImpl() {
+		this.em = EM.getLocalEm();
 	}
 	
 	@Override
