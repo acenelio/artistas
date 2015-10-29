@@ -3,7 +3,7 @@ Favor executar a partir do programa "Principal"
 Neste push foi acrescentada a implementacao dos seguintes
 casos de uso:
 
-  - UC02 : Pesquisa Albuns
+  - UC02 : Pesquisa Albuns -
 
 ----------------------------------------------------------
 
